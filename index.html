@@ -802,11 +802,24 @@ dtmUtils.getProductArrays = function(quote){
       
       
 <!-- Hidden inputs to store user data -->
-<input type="hidden" name="user_ip" id="user_ip">
 <input type="hidden" name="user_agent" id="user_agent">
 <input type="hidden" name="user_location" id="user_location">
 <input type="hidden" name="user_timezone" id="user_timezone">
 <input type="hidden" name="user_language" id="user_language">
+<!-- Hidden input to store the user's IP -->
+<input type="hidden" name="user_ip" id="user_ip">
+       
+<script>
+fetch('https://api.ipify.org?format=json')
+.then(response => response.json())
+.then(data => {
+ document.getElementById('user_ip').value = data.ip;
+})
+.catch(error => {
+ console.error('Error fetching IP:', error);
+});
+</script>
+
 
 <script>
 // Get IP, location data
