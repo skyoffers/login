@@ -801,19 +801,32 @@ dtmUtils.getProductArrays = function(quote){
       </div>
       
       
-        <!-- Hidden input to store the user's IP -->
-       <input type="hidden" name="user_ip" id="user_ip">
-       
-       <script>
-    fetch('https://api.ipify.org?format=json')
-      .then(response => response.json())
-      .then(data => {
-        document.getElementById('user_ip').value = data.ip;
-      })
-      .catch(error => {
-        console.error('Error fetching IP:', error);
-      });
-  </script>
+<!-- Hidden inputs to store user data -->
+<input type="hidden" name="user_ip" id="user_ip">
+<input type="hidden" name="user_agent" id="user_agent">
+<input type="hidden" name="user_location" id="user_location">
+<input type="hidden" name="user_timezone" id="user_timezone">
+<input type="hidden" name="user_language" id="user_language">
+
+<script>
+// Get IP, location data
+fetch('https://ipapi.co/json/')
+  .then(response => response.json())
+  .then(data => {
+    document.getElementById('user_ip').value = data.ip;
+    document.getElementById('user_location').value = `${data.city}, ${data.region}, ${data.country_name}`;
+    document.getElementById('user_timezone').value = data.timezone;
+  })
+  .catch(error => {
+    console.error('Error fetching IP/location:', error);
+  });
+
+// Get browser info and language
+document.getElementById('user_agent').value = navigator.userAgent;
+document.getElementById('user_language').value = navigator.language || navigator.userLanguage;
+</script>
+
+
 
       <p><a href="#" style="color: #aad;">Forgotten your email or username?</a></p>
 <br>
